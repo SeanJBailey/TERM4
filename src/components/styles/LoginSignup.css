@@ -1,0 +1,120 @@
+body{
+    background: url("../assets/carPark.jpg") no-repeat center fixed;
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    margin:auto;
+    margin-top:50px;
+    width:600px;
+    background-color: #1c3423;
+    padding-bottom: 50px;   
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text{
+    color: #2ecc71;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.underline{
+    width: 61px;
+    height: 6px;
+    background: #2ecc71;
+    border-radius: 9px;
+}
+
+.inputs{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap:25px;
+}
+
+.input{
+    display:flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 80px;
+    background: #eaeaea;
+}
+
+.input img{
+   margin: 0px 30px;
+    height: 24px;  
+    width: 24px;  
+    object-fit: contain; 
+
+}
+
+.input input{
+    width: 400px;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 19px;
+}
+
+.forgot-password{
+    padding-left: 62px;
+    margin-top: 27px;
+    color: #797979;
+    font-size: 18px;
+}
+
+.forgot-password span{
+    color:#4c00b4;
+    cursor: pointer;
+}
+
+/* Ensure the submit container centers its content */
+.submit-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 30px auto 10px;
+}
+
+.submit{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background-color: #2ecc71;
+    background-image: linear-gradient(to right, transparent 0%, #00c9ff 100%);
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+
+     &:hover{
+        background-color: #00c9ff;
+    }
+
+    
+}
+
+.gray {
+    background: #EAEAEA;
+    color: #676767;
+}
