@@ -11,16 +11,19 @@ import Home from "./components/pages/Home";
 import "./index.css";
 import Vehicles from "./components/pages/Vehicles";
 import Tickets from "./components/pages/Tickets";
+import Profile from "./components/pages/Profile";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [refreshFlag, setRefreshFlag] = useState(0);
+
 
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('userID'); // Clear userID from localStorage on logout
     setIsLoggedIn(false);
   };
 
@@ -102,6 +105,15 @@ export default function App() {
             <Navigate to="/login" replace />
           } 
         />
+
+        <Route 
+            path="/profile" 
+            element={
+              isLoggedIn ? 
+                <Profile />: 
+                <Navigate to="/login" replace />
+            }
+          />
       </Routes>
     </BrowserRouter>
   );

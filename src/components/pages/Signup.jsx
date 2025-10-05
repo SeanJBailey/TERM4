@@ -55,8 +55,9 @@ const Signup = ({ onLogin }) => {
       }
 
       const data = await response.json(); // parses the JSON response from the server 
+      localStorage.setItem('userID', data.userID); // Store userID in localStorage
       alert('Signup successful! Please log in.');
-      console.log('User has signed up:', data);
+      console.log('User has signed up:');
 
       // calls method to reroute user after signup
       onLogin();

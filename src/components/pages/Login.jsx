@@ -29,8 +29,10 @@ const Login = ({ onLogin }) => {
       })
 
       if (response.ok) {
-        const user = await response.json();
-        onLogin(user); // calls the onLogin prop function with the user data
+        const data = await response.json();
+        localStorage.setItem('userID', data.userID); // Store userID in localStorage
+        console.log("Login response:", data);
+        onLogin(); 
       }else{
         alert("Invalid credentials. Please try again.");
       }

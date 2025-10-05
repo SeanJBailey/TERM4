@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import user_icon from '../assets/person.png'; 
 
 const AccessibilityContainer = styled.div`
   display: flex;
