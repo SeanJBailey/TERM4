@@ -1,149 +1,111 @@
 body {
-  justify-content: center;   
-  align-items: center;       
+  margin: 0;
   background: url("../assets/carPark.jpg") no-repeat center center fixed;
   background-size: cover;
+  font-family: "Segoe UI", sans-serif;
 }
 
+/* ====== Container ====== */
 .vehicle-container {
   display: flex;
-  justify-content: center;  
-  align-items: center;      
-  height: calc(100vh - 60px); body {
-   margin: 0;
-  /*justify-content: center;   /* centers horizontally */
- /* align-items: center;       /* centers vertically */
-  background: url("../assets/carPark.jpg") no-repeat center center fixed;
-  background-size: cover;
+  justify-content: center;
+  align-items: flex-start; /* move form to the top area */
+  min-height: 100vh;
+  padding-top: 80px; /* distance from top */
 }
 
-.vehicle-container {
-  display: flex;
-  justify-content: center;  /* centers horizontally */
-  align-items: center;      /* centers vertically */
-  min-height: calc(100vh - 60px); /* subtract navbar height if your navbar is 60px tall */
-}
-
+/* ====== Form Card ====== */
 .vehicle-form {
   background: #1c3423;
-  padding: 2rem;
-  border-radius: 20px;
-  width: 600px;
+  padding: 2.8rem; /* slightly more padding */
+  border-radius: 24px;
+  width: 720px; /* make form wider */
   color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
+  transform: scale(1.05); /* subtle enlargement */
+  transition: transform 0.2s ease;
+}
+
+.vehicle-form:hover {
+  transform: scale(1.07);
 }
 
 .vehicle-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
+  font-size: 2.2rem; /* larger title */
+  font-weight: 800;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 1px;
+  color: #e8f6ef;
 }
 
+/* ====== Grid Layout ====== */
 .vehicle-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
+/* ====== Fields ====== */
 .vehicle-field {
   display: flex;
   flex-direction: column;
 }
 
 .vehicle-field label {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: bold;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
   background: black;
   color: white;
-  padding: 2px 6px;
+  padding: 3px 8px;
   border-radius: 6px;
   align-self: flex-start;
 }
 
 .vehicle-field input {
-  padding: 0.6rem;
-  border-radius: 10px;
+  padding: 0.8rem;
+  border-radius: 12px;
   border: none;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  background: #e8f6ef;
+  color: #1c3423;
+  font-weight: 600;
 }
 
+.vehicle-field input:focus {
+  outline: 2px solid #00c38a;
+}
+
+/* ====== Button ====== */
 .vehicle-button {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   width: 100%;
-  padding: 0.8rem;
-  font-size: 1.1rem;
-  background: #103f2d;
+  padding: 1rem;
+  font-size: 1.2rem;
+  background: linear-gradient(90deg, #00d4ff, #00c38a);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   font-weight: bold;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease, transform 0.1s ease;
 }
 
 .vehicle-button:hover {
-  background: #145c3d;
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 
-}
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+  .vehicle-form {
+    width: 90%;
+    padding: 2rem;
+  }
 
-.vehicle-form {
-  background: #1c3423;
-  padding: 2rem;
-  border-radius: 20px;
-  width: 600px;
-  color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-.vehicle-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-}
-
-.vehicle-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.vehicle-field {
-  display: flex;
-  flex-direction: column;
-}
-
-.vehicle-field label {
-  font-size: 0.85rem;
-  font-weight: bold;
-  margin-bottom: 0.25rem;
-  background: black;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 6px;
-  align-self: flex-start;
-}
-
-.vehicle-field input {
-  padding: 0.6rem;
-  border-radius: 10px;
-  border: none;
-  font-size: 0.95rem;
-}
-
-.vehicle-button {
-  margin-top: 1.5rem;
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1.1rem;
-  background: #103f2d;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.vehicle-button:hover {
-  background: #145c3d;
+  .vehicle-grid {
+    grid-template-columns: 1fr;
+  }
 }
