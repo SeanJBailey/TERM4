@@ -5,24 +5,22 @@ body {
   font-family: "Segoe UI", sans-serif;
 }
 
-/* ====== Container ====== */
 .vehicle-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* move form to the top area */
+  align-items: flex-start; 
   min-height: 100vh;
-  padding-top: 80px; /* distance from top */
+  padding-top: 80px; 
 }
 
-/* ====== Form Card ====== */
 .vehicle-form {
   background: #1c3423;
-  padding: 2.8rem; /* slightly more padding */
+  padding: 2.8rem; 
   border-radius: 24px;
-  width: 720px; /* make form wider */
+  width: 720px; 
   color: white;
   box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
-  transform: scale(1.05); /* subtle enlargement */
+  transform: scale(1.05); 
   transition: transform 0.2s ease;
 }
 
@@ -31,7 +29,7 @@ body {
 }
 
 .vehicle-title {
-  font-size: 2.2rem; /* larger title */
+  font-size: 2.2rem; 
   font-weight: 800;
   margin-bottom: 2rem;
   text-align: center;
@@ -39,14 +37,12 @@ body {
   color: #e8f6ef;
 }
 
-/* ====== Grid Layout ====== */
 .vehicle-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.2rem;
 }
 
-/* ====== Fields ====== */
 .vehicle-field {
   display: flex;
   flex-direction: column;
@@ -77,7 +73,6 @@ body {
   outline: 2px solid #00c38a;
 }
 
-/* ====== Button ====== */
 .vehicle-button {
   margin-top: 2rem;
   width: 100%;
