@@ -3,27 +3,48 @@ import "../styles/Vehicles.css";
 
 export default function Vehicles() {
   const [formData, setFormData] = useState({
-
     licensePlate: "",
     vehicleMake: "",
     vehicleModel: "",
     vehicleColour: "",
     vehicleVIN: "",
+    vehicleImage: null, // actual file
+    imagePreview: null, // local preview
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        vehicleImage: file,
+        imagePreview: URL.createObjectURL(file),
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // use FormData for files + text data
+      const data = new FormData();
+      data.append("licensePlate", formData.licensePlate);
+      data.append("vehicleMake", formData.vehicleMake);
+      data.append("vehicleModel", formData.vehicleModel);
+      data.append("vehicleColour", formData.vehicleColour);
+      data.append("vehicleVIN", formData.vehicleVIN);
+      if (formData.vehicleImage) {
+        data.append("vehicleImage", formData.vehicleImage);
+      }
+
       const response = await fetch("http://localhost:8080/api/vehicle/create", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: data,
       });
 
       if (response.ok) {
@@ -36,6 +57,8 @@ export default function Vehicles() {
           vehicleModel: "",
           vehicleColour: "",
           vehicleVIN: "",
+          vehicleImage: null,
+          imagePreview: null,
         });
       } else {
         console.error("Failed to save vehicle");
@@ -112,6 +135,25 @@ export default function Vehicles() {
               required
             />
           </div>
+
+          <div className="vehicle-field">
+            <label>Vehicle Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </div>
+
+          {formData.imagePreview && (
+            <div className="vehicle-preview">
+              <img
+                src={formData.imagePreview}
+                alt="Preview"
+                style={{ width: "200px", height: "auto", marginTop: "10px" }}
+              />
+            </div>
+          )}
         </div>
 
         <button type="submit" className="vehicle-button">
