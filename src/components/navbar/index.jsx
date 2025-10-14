@@ -36,11 +36,11 @@ const NavLogo = styled.img`
 `;
 
 const Img = styled.img`
-    width: 50px;
+    width: 40px;
     height: 40px;
     margin-top:0.5em;
-    margin-right:2em; 
-    border-radius: 50%;
+    margin-right:3em; 
+    border-radius: 100%;
     cursor: pointer;
     object-fit:cover;
     transition: 0.2s ease-in-out;
@@ -64,9 +64,8 @@ export default function NavBar({ onLogout }){
         </MiddleSection>
         <RightSection>
             <Link to = "/profile">
-            <Img src ={profile_icon} alt=""/>
+            <Img src ={localStorage.getItem("profileImage") || profile_icon} alt=""/>
             </Link>
-            {/* <Accessibility onLogout={onLogout} /> */}
         </RightSection>
     </NavBarContainer>
 }

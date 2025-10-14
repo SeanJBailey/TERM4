@@ -23,7 +23,7 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('userID'); // Clear userID from localStorage on logout
+    localStorage.clear(); // clears local storage for logout
     setIsLoggedIn(false);
   };
 
@@ -110,7 +110,7 @@ export default function App() {
             path="/profile" 
             element={
               isLoggedIn ? 
-                <Profile />: 
+                <Profile onLogout = {handleLogout}/>: 
                 <Navigate to="/login" replace />
             }
           />

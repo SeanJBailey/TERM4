@@ -8,6 +8,7 @@ import phone_icon from '../assets/phone.png';
 import profile_icon from '../assets/profile.png';
 import gender_icon from '../assets/gender.png';
 import { Link } from 'react-router-dom';
+import {SignUp} from '../../API/userApi';
 
 const Signup = ({ onLogin }) => { 
   // Defines a Signup component with state for all the form fields. As the user types,
@@ -33,33 +34,8 @@ const Signup = ({ onLogin }) => {
   const handleSubmit = async (e) => { // arrow function to handle form submission
     e.preventDefault(); // stops the default form submission behavior
 
-      
     try {
-      // sends a POST request to the backend API to create a new user with the form data
-      const response = await fetch('http://localhost:8080/user/signup', {
-        method: 'POST', // specifys this is a POST request
-        headers: { 'Content-Type': 'application/json' }, // tells server that request body is JSON
-        body: JSON.stringify({ // converts formData to JSON string
-          name: formData.name,
-          contactNumber: formData.contactNumber,
-          dob: formData.dob,
-          gender: formData.gender,
-          userName: formData.userName,
-          email: formData.email,
-          password: formData.password
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Signup failed');
-      }
-
-      const data = await response.json(); // parses the JSON response from the server 
-      localStorage.setItem('userID', data.userID); // Store userID in localStorage
-      alert('Signup successful! Please log in.');
-      console.log('User has signed up:');
-
-      // calls method to reroute user after signup
+      await SignUp(formData);
       onLogin();
     } catch (error) {
       console.error(error);
