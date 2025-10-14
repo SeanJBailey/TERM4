@@ -8,8 +8,8 @@ export default function Vehicles() {
     vehicleModel: "",
     vehicleColour: "",
     vehicleVIN: "",
-    vehicleImage: null, // actual file
-    imagePreview: null, // local preview
+    vehicleImage: null, 
+    imagePreview: null, 
   });
 
   const handleChange = (e) => {
@@ -31,7 +31,6 @@ export default function Vehicles() {
     e.preventDefault();
 
     try {
-      // use FormData for files + text data
       const data = new FormData();
       data.append("licensePlate", formData.licensePlate);
       data.append("vehicleMake", formData.vehicleMake);
