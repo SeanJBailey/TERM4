@@ -107,7 +107,6 @@ body {
   color: #e8f6ef;
 }
 
-/* Modal styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -151,28 +150,25 @@ body {
   color: #ff5555;
 }
 
-/* Manage button */
 .manage-btn {
   width: 40%;
   margin: 1.2rem auto;
   display: block;
 }
 
-/* --- Manage container (now outside media queries) --- */
 .manage-container {
   background: #1c3423;
   color: white;
   padding: 2rem;
   border-radius: 24px;
   width: 90%;
-  max-height: 400px;   /* Limit height */
+  max-height: 400px;   
   margin: 3rem auto;
   box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
   border: 2px solid #00c38a;
-  overflow-y: auto;    /* Enable vertical scroll */
+  overflow-y: auto;    
 }
 
-/* Vehicle table */
 .vehicle-table {
   width: 100%;
   border-collapse: collapse;
@@ -214,7 +210,6 @@ body {
   background-color: #cc4444;
 }
 
-/* --- Media Queries --- */
 @media (max-width: 768px) {
   .vehicle-form {
     width: 90%;

@@ -42,8 +42,8 @@ export default function Vehicles() {
   if (file) {
     setFormData((prev) => ({
       ...prev,
-      vehicleImage: file, // store new file
-      imagePreview: URL.createObjectURL(file), // show local preview
+      vehicleImage: file, 
+      imagePreview: URL.createObjectURL(file), 
     }));
   }
 };
@@ -54,7 +54,7 @@ export default function Vehicles() {
   try {
     const data = new FormData();
     
-    if (editingId) data.append("vehicleId", editingId); // required for update
+    if (editingId) data.append("vehicleId", editingId); 
 
     data.append("licensePlate", formData.licensePlate);
     data.append("vehicleMake", formData.vehicleMake);
@@ -63,7 +63,7 @@ export default function Vehicles() {
     data.append("vehicleVIN", formData.vehicleVIN);
 
     if (formData.vehicleImage) {
-      data.append("vehicleImage", formData.vehicleImage); // only add new file
+      data.append("vehicleImage", formData.vehicleImage);
     }
 
     const url = editingId
@@ -127,7 +127,7 @@ export default function Vehicles() {
     vehicleVIN: vehicle.vehicleVIN,
     vehicleImage: null, // No new file yet
     imagePreview: vehicle.vehicleImage
-      ? `http://localhost:8080${vehicle.vehicleImage}` // Existing URL from DB
+      ? `http://localhost:8080${vehicle.vehicleImage}` 
       : null,
   });
 
