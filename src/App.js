@@ -11,17 +11,31 @@ import Home from "./components/pages/Home";
 import "./index.css";
 import Vehicles from "./components/pages/Vehicles";
 import Tickets from "./components/pages/Tickets";
+import ParkingLotForm from "./components/pages/ParkingLotForm";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const raw = localStorage.getItem('currentUser');
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  });
   const [refreshFlag, setRefreshFlag] = useState(0);
 
-  const handleLogin = () => {
+  // Handle login. `user` may be provided by Login component or omitted (older flow)
+  const handleLogin = (user) => {
+    if (user) {
+      setCurrentUser(user);
+      try { localStorage.setItem('currentUser', JSON.stringify(user)); } catch (e) { /* ignore */ }
+    }
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setCurrentUser(null);
+    try { localStorage.removeItem('currentUser'); } catch (e) { /* ignore */ }
   };
 
   const handleNewReservation = () => setRefreshFlag(f => f + 1);
@@ -58,7 +72,7 @@ export default function App() {
           path="/home" 
           element={
             isLoggedIn ? 
-            <Home /> : 
+            <Home currentUser={currentUser} /> : 
             <Navigate to="/login" replace />
           } 
         />
@@ -93,6 +107,18 @@ export default function App() {
              <Vehicles />: 
             <Navigate to="/login" replace />
           } 
+        />
+        <Route 
+          path="/parking-lots"
+          element={
+            isLoggedIn ?
+            <div className="min-h-screen bg-gray-100 p-6">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+                <ParkingLotForm currentUser={currentUser} onSuccess={() => {}} />
+              </div>
+            </div> :
+            <Navigate to="/login" replace />
+          }
         />
         <Route 
           path="/tickets" 

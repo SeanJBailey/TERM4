@@ -1,0 +1,72 @@
+/* ParkingLot.css - adapted to app theme variables */
+
+/* Form container (uses panel background like other cards) */
+.parking-form-container {
+  background: var(--panel);
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  max-width: 640px;
+  color: var(--text);
+}
+
+/* Form inputs inherit app style */
+.parking-form input,
+.parking-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(15,47,38,0.85);
+  color: var(--text);
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.parking-form input::placeholder,
+.parking-form textarea::placeholder{ color: var(--muted); }
+
+/* File input small tweak */
+.parking-form input[type="file"] { padding:6px; background:transparent; color:var(--text); }
+
+/* Buttons — reuse shared button classes */
+.parking-form .btn{ padding:10px 16px; border-radius:999px; }
+.parking-form .btn-grad{ font-weight:700 }
+.parking-form .btn-outline{ background: transparent; border:1px solid rgba(255,255,255,0.08); }
+
+/* Error message */
+.parking-form-container .error { color: #ffb4b4; margin-bottom: 12px; }
+
+/* Parking list container — grid to match Home */
+.parking-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+/* Card uses the same panel style as lot-card */
+.parking-card{
+  background: var(--panel);
+  border-radius: var(--radius-md);
+  padding: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform .18s ease, box-shadow .18s ease;
+  display:flex; flex-direction:column;
+}
+.parking-card:hover{ transform: translateY(-6px); }
+
+.parking-card img{ width:100%; height:160px; object-fit:cover; display:block; }
+
+.parking-card h3{ margin:12px 14px 6px; color:var(--text); font-size:1.02rem }
+.parking-card p{ margin:0 14px 8px; color:var(--muted); font-size:0.95rem }
+
+.parking-card .actions{ display:flex; gap:8px; margin:12px 14px 14px; }
+.parking-card .actions button{ padding:8px 12px; border-radius:8px; font-weight:700 }
+.parking-card .actions .btn-grad{ background: linear-gradient(90deg, var(--grad-start), var(--grad-end)); color:white }
+.parking-card .actions .btn-outline{ background: transparent; border:1px solid rgba(255,255,255,0.08); color:var(--text) }
+.parking-card .actions .btn-danger{ background:#c0392b; color:white }
+
+@media (max-width: 620px){ .parking-card img{ height:120px } }

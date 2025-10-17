@@ -1,31 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Home.css"; 
-import capetown  from "../assets/capetown.png";
-import p         from "../assets/p.png";
-import woodstock from "../assets/woodstock.png";
-import mont      from "../assets/mont.png";
-import century   from "../assets/century.png";
-import vn        from "../assets/vn.png";
+import { fetchParkingLots, deleteParkingLot } from "../../API/parkingApi";
+import ParkingLotForm from "./ParkingLotForm";
+import ParkingLotList from "../ParkingLotList";
 
-
-const lots = [
-   { id: 1, name: "Parrow",       img: capetown },
-  { id: 2, name: "Bellville",    img: p },
-  { id: 3, name: "Woodstock",    img: woodstock },
-  { id: 4, name: "Monte Vista",  img: mont },
-  { id: 5, name: "Century City", img: century },
-  { id: 6, name: "Cape Town V&A",img: vn },
-];
-
-export default function Home() {
+export default function Home({ currentUser }) {
   const navigate = useNavigate();
+  const [lots, setLots] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(null);
+  const [error, setError] = useState(null);
+
+  const load = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchParkingLots();
+      setLots(data);
+    } catch (e) {
+      setError(e.message || 'Failed to load');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(()=>{ load(); }, []);
 
   const onSearch = (e) => {
     e.preventDefault();
     const q = new FormData(e.currentTarget).get("q")?.trim();
     navigate(q ? `/reservations?query=${encodeURIComponent(q)}` : "/reservations");
   };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Delete this parking lot?')) return;
+    try {
+      await deleteParkingLot(id);
+      await load();
+    } catch (e) {
+      // use window.alert to avoid lint flagged globals too
+      window.alert(e.message || 'Delete failed');
+    }
+  };
+
+  const handleSaved = () => { setEditing(null); load(); };
 
   return (
     <main className="home-page">
@@ -48,21 +66,17 @@ export default function Home() {
 
       {/* GRID */}
       <section className="home-grid">
-        {lots.map((lot) => (
-          <article key={lot.id} className="lot-card" tabIndex={0}>
-            <img src={lot.img} alt={lot.name} loading="lazy" />
-            <div className="lot-card__footer">
-              <h3>{lot.name}</h3>
-              <Link
-                className="btn btn-grad btn-sm"
-                to={`/reservations?lot=${encodeURIComponent(lot.name)}`}
-              >
-                Book
-              </Link>
-            </div>
-          </article>
-        ))}
+        <ParkingLotList currentUser={currentUser} onEdit={(lot) => setEditing(lot)} />
       </section>
+
+      {/* Inline editor */}
+      {editing && (
+        <section style={{padding:12}}>
+          <h2>Edit Parking Lot</h2>
+          <ParkingLotForm initial={editing} onSuccess={handleSaved} />
+          <button className="btn" onClick={()=> setEditing(null)}>Close</button>
+        </section>
+      )}
 
       {/* ACTION BAR */}
       <section className="home-actions">
