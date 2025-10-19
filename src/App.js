@@ -11,7 +11,11 @@ import Home from "./components/pages/Home";
 import "./index.css";
 import Vehicles from "./components/pages/Vehicles";
 import Tickets from "./components/pages/Tickets";
+<<<<<<< HEAD
 import ParkingLotForm from "./components/pages/ParkingLotForm";
+=======
+import Profile from "./components/pages/Profile";
+>>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,16 +27,22 @@ export default function App() {
   });
   const [refreshFlag, setRefreshFlag] = useState(0);
 
+<<<<<<< HEAD
   // Handle login. `user` may be provided by Login component or omitted (older flow)
   const handleLogin = (user) => {
     if (user) {
       setCurrentUser(user);
       try { localStorage.setItem('currentUser', JSON.stringify(user)); } catch (e) { /* ignore */ }
     }
+=======
+
+  const handleLogin = () => {
+>>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
+    localStorage.clear(); // clears local storage for logout
     setIsLoggedIn(false);
     setCurrentUser(null);
     try { localStorage.removeItem('currentUser'); } catch (e) { /* ignore */ }
@@ -128,6 +138,15 @@ export default function App() {
             <Navigate to="/login" replace />
           } 
         />
+
+        <Route 
+            path="/profile" 
+            element={
+              isLoggedIn ? 
+                <Profile onLogout = {handleLogout}/>: 
+                <Navigate to="/login" replace />
+            }
+          />
       </Routes>
     </BrowserRouter>
   );
