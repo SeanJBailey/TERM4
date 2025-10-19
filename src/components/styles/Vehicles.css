@@ -209,7 +209,7 @@ body {
 .delete-btn:hover {
   background-color: #cc4444;
 }
-
+  
 @media (max-width: 768px) {
   .vehicle-form {
     width: 90%;
