@@ -48,6 +48,7 @@ export function NavLinks(props) {
                 <LinkItem><StyledLink to = "/">Home</StyledLink></LinkItem>
                 <LinkItem><StyledLink to = "/vehicles"> Vehicles </StyledLink></LinkItem>
                 <LinkItem><StyledLink to="/reservations"> Reservations </StyledLink></LinkItem>
+                <LinkItem><StyledLink to="/parking-lots"> Parking Lots </StyledLink></LinkItem>
                 <LinkItem><StyledLink to="/tickets" > Tickets </StyledLink></LinkItem>
             </LinksWrapper>
         </NavLinksContainer>

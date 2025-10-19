@@ -93,6 +93,9 @@ body {
   transform: translateY(-1px);
 }
 
+<<<<<<< HEAD
+/* ====== Responsive ====== */
+=======
 .vehicle-form-inner {
   background: #2a5038;
   padding: 2rem;
@@ -209,7 +212,12 @@ body {
 .delete-btn:hover {
   background-color: #cc4444;
 }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
+>>>>>>> 36e666698104c851cf1d044ab530c799ef982035
 @media (max-width: 768px) {
   .vehicle-form {
     width: 90%;
@@ -219,6 +227,8 @@ body {
   .vehicle-grid {
     grid-template-columns: 1fr;
   }
+<<<<<<< HEAD
+=======
 
   .vehicle-form-inner {
     background: #2a5038;
@@ -226,4 +236,5 @@ body {
     border-radius: 20px;
     margin-top: 1rem;
   }
+>>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
 }
