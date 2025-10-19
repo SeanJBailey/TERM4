@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-=======
 import React, { useState, useEffect } from "react";
->>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
 import "../styles/Vehicles.css";
 
 export default function Vehicles() {
@@ -12,18 +8,14 @@ export default function Vehicles() {
     vehicleModel: "",
     vehicleColour: "",
     vehicleVIN: "",
-<<<<<<< HEAD
-    vehicleImage: null, 
-    imagePreview: null, 
-=======
     vehicleImage: null,
     imagePreview: null,
->>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
   });
 
   const [vehicles, setVehicles] = useState([]);
   const [editingId, setEditingId] = useState(null);
 
+  // Fetch all vehicles
   const fetchVehicles = async () => {
     try {
       const response = await fetch("http://localhost:8080/api/vehicle/all");
@@ -42,12 +34,13 @@ export default function Vehicles() {
     fetchVehicles();
   }, []);
 
+  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle image upload and preview
   const handleImageChange = (e) => {
-<<<<<<< HEAD
     const file = e.target.files[0];
     if (file) {
       setFormData({
@@ -58,29 +51,35 @@ export default function Vehicles() {
     }
   };
 
+  // Handle form submission (Add or Update)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const data = new FormData();
+
+      if (editingId) data.append("vehicleId", editingId);
+
       data.append("licensePlate", formData.licensePlate);
       data.append("vehicleMake", formData.vehicleMake);
       data.append("vehicleModel", formData.vehicleModel);
       data.append("vehicleColour", formData.vehicleColour);
       data.append("vehicleVIN", formData.vehicleVIN);
+
       if (formData.vehicleImage) {
         data.append("vehicleImage", formData.vehicleImage);
       }
 
-      const response = await fetch("http://localhost:8080/api/vehicle/create", {
-        method: "POST",
-        body: data,
-      });
+      const url = editingId
+        ? "http://localhost:8080/api/vehicle/update"
+        : "http://localhost:8080/api/vehicle/create";
+
+      const method = editingId ? "PUT" : "POST";
+
+      const response = await fetch(url, { method, body: data });
 
       if (response.ok) {
-        const result = await response.json();
-        console.log("Vehicle saved successfully:", result);
-        alert("Vehicle added successfully!");
+        alert(editingId ? "Vehicle updated successfully!" : "Vehicle added successfully!");
         setFormData({
           licensePlate: "",
           vehicleMake: "",
@@ -90,72 +89,18 @@ export default function Vehicles() {
           vehicleImage: null,
           imagePreview: null,
         });
+        setEditingId(null);
+        fetchVehicles();
       } else {
-        console.error("Failed to save vehicle");
         alert("Failed to save vehicle. Check backend logs.");
       }
     } catch (error) {
       console.error("Error saving vehicle:", error);
       alert("Error connecting to server. Is it running?");
-=======
-  const file = e.target.files[0];
-  if (file) {
-    setFormData((prev) => ({
-      ...prev,
-      vehicleImage: file, 
-      imagePreview: URL.createObjectURL(file), 
-    }));
-  }
-};
-
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const data = new FormData();
-    
-    if (editingId) data.append("vehicleId", editingId); 
-
-    data.append("licensePlate", formData.licensePlate);
-    data.append("vehicleMake", formData.vehicleMake);
-    data.append("vehicleModel", formData.vehicleModel);
-    data.append("vehicleColour", formData.vehicleColour);
-    data.append("vehicleVIN", formData.vehicleVIN);
-
-    if (formData.vehicleImage) {
-      data.append("vehicleImage", formData.vehicleImage);
     }
+  };
 
-    const url = editingId
-      ? "http://localhost:8080/api/vehicle/update"
-      : "http://localhost:8080/api/vehicle/create";
-
-    const method = editingId ? "PUT" : "POST";
-
-    const response = await fetch(url, { method, body: data });
-
-    if (response.ok) {
-      alert(editingId ? "Vehicle updated!" : "Vehicle added!");
-      setFormData({
-        licensePlate: "",
-        vehicleMake: "",
-        vehicleModel: "",
-        vehicleColour: "",
-        vehicleVIN: "",
-        vehicleImage: null,
-        imagePreview: null,
-      });
-      setEditingId(null);
-      fetchVehicles();
-    } else {
-      alert("Failed to save vehicle. Check backend logs.");
-    }
-  } catch (error) {
-    console.error("Error saving vehicle:", error);
-    alert("Error connecting to server. Is it running?");
-  }
-};
-
+  // Delete vehicle
   const handleDelete = async (vehicleId) => {
     if (!window.confirm("Are you sure you want to delete this vehicle?")) return;
 
@@ -173,105 +118,30 @@ export default function Vehicles() {
       }
     } catch (error) {
       console.error("Error deleting vehicle:", error);
->>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
     }
   };
 
+  // Edit existing vehicle
   const handleEdit = (vehicle) => {
-  setEditingId(vehicle.vehicleId);
+    setEditingId(vehicle.vehicleId);
 
-  setFormData({
-    licensePlate: vehicle.licensePlate,
-    vehicleMake: vehicle.vehicleMake,
-    vehicleModel: vehicle.vehicleModel,
-    vehicleColour: vehicle.vehicleColour,
-    vehicleVIN: vehicle.vehicleVIN,
-    vehicleImage: null, // No new file yet
-    imagePreview: vehicle.vehicleImage
-      ? `http://localhost:8080${vehicle.vehicleImage}` 
-      : null,
-  });
+    setFormData({
+      licensePlate: vehicle.licensePlate,
+      vehicleMake: vehicle.vehicleMake,
+      vehicleModel: vehicle.vehicleModel,
+      vehicleColour: vehicle.vehicleColour,
+      vehicleVIN: vehicle.vehicleVIN,
+      vehicleImage: null,
+      imagePreview: vehicle.vehicleImage
+        ? `http://localhost:8080${vehicle.vehicleImage}`
+        : null,
+    });
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="vehicle-container">
-<<<<<<< HEAD
-      <form className="vehicle-form" onSubmit={handleSubmit}>
-        <h1 className="vehicle-title">Vehicle Entry</h1>
-
-        <div className="vehicle-grid">
-          <div className="vehicle-field">
-            <label>License Plate</label>
-            <input
-              type="text"
-              name="licensePlate"
-              value={formData.licensePlate}
-              onChange={handleChange}
-              placeholder="CA 123 456"
-              required
-            />
-          </div>
-
-          <div className="vehicle-field">
-            <label>Vehicle Make</label>
-            <input
-              type="text"
-              name="vehicleMake"
-              value={formData.vehicleMake}
-              onChange={handleChange}
-              placeholder="Toyota"
-              required
-            />
-          </div>
-
-          <div className="vehicle-field">
-            <label>Vehicle Model</label>
-            <input
-              type="text"
-              name="vehicleModel"
-              value={formData.vehicleModel}
-              onChange={handleChange}
-              placeholder="Corolla Quest 1.6"
-              required
-            />
-          </div>
-
-          <div className="vehicle-field">
-            <label>Vehicle Colour</label>
-            <input
-              type="text"
-              name="vehicleColour"
-              value={formData.vehicleColour}
-              onChange={handleChange}
-              placeholder="White"
-              required
-            />
-          </div>
-
-          <div className="vehicle-field">
-            <label>Vehicle VIN</label>
-            <input
-              type="text"
-              name="vehicleVIN"
-              value={formData.vehicleVIN}
-              onChange={handleChange}
-              placeholder="1HGCM82633A004352"
-              required
-            />
-          </div>
-
-          <div className="vehicle-field">
-            <label>Vehicle Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </div>
-
-=======
       {/* ===== Add or Update Form ===== */}
       <div className="vehicle-form">
         <h1 className="vehicle-title">
@@ -341,24 +211,11 @@ export default function Vehicles() {
             </div>
           </div>
 
->>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
           {formData.imagePreview && (
             <div className="vehicle-preview">
               <img
                 src={formData.imagePreview}
                 alt="Preview"
-<<<<<<< HEAD
-                style={{ width: "200px", height: "auto", marginTop: "10px" }}
-              />
-            </div>
-          )}
-        </div>
-
-        <button type="submit" className="vehicle-button">
-          CONFIRM
-        </button>
-      </form>
-=======
                 style={{ width: "200px", marginTop: "10px" }}
               />
             </div>
@@ -428,7 +285,6 @@ export default function Vehicles() {
           </tbody>
         </table>
       </div>
->>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
     </div>
   );
 }
