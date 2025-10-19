@@ -3,6 +3,7 @@ import '../styles/LoginSignup.css';
 import profile_icon from '../assets/profile.png';
 import password_icon from '../assets/password.png';
 import { Link } from 'react-router-dom';
+import {login} from '../../API/userApi';
 
 const Login = ({ onLogin }) => { 
 
@@ -12,36 +13,24 @@ const Login = ({ onLogin }) => {
   });
 
   const handleChange = (e) => { // arrow function to handle input changes
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+      });
+    };
 
-  const handleSubmit = async (e) => { // arrow function to handle form submission
-    e.preventDefault(); // stops the default form submission behavior
+    const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    try{
-      const response = await fetch('http://localhost:8080/user/login', {
-        method: 'POST', // specifys this is a POST request
-        headers: { 'Content-Type': 'application/json' }, // tells server that request body is JSON
-        body: JSON.stringify(formData) // converts formData to JSON string
-      })
-
-      if (response.ok) {
-        const user = await response.json();
-        onLogin(user); // calls the onLogin prop function with the user data
-      }else{
-        alert("Invalid credentials. Please try again.");
-      }
-
+    try {
+      await login(formData);
+      onLogin();
+    } catch (error) {
+      console.error(error);
+      alert('Login failed. Please try again.');
     }
-    catch(error){
-      console.error('Login failed:', error);
-      alert('Login failed. Please check your credentials and try again.');
-    }
-  };
 
+  };
 
   return (
     <div className="container">

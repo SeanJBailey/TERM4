@@ -3,6 +3,9 @@ import LogoImgFile from '../assets/autoTicketLogo.png';
 import styled from 'styled-components';
 import {NavLinks} from './navlinks';
 import Accessibility from './accessibility';
+import profile_icon from '../assets/profileIMG.png'; 
+import { Link } from "react-router-dom";
+import profile from '../pages/Profile';
 
 const NavBarContainer = styled.div`
     width: 100%;
@@ -20,7 +23,7 @@ const LeftSection = styled.div`
 
 const MiddleSection = styled.div`
     display: flex;
-    flex: 2;
+    flex: 1;
     height: 100%;
     justify-content: center;
     align-items: center;
@@ -30,6 +33,21 @@ const MiddleSection = styled.div`
 const NavLogo = styled.img`
     width: 70px;
     height: 60px;
+`;
+
+const Img = styled.img`
+    width: 40px;
+    height: 40px;
+    margin-top:0.5em;
+    margin-right:3em; 
+    border-radius: 100%;
+    cursor: pointer;
+    object-fit:cover;
+    transition: 0.2s ease-in-out;
+
+    &:hover{
+        transform: scale(1.2);
+    }
 `;
 
 const RightSection = styled.div`
@@ -45,7 +63,9 @@ export default function NavBar({ onLogout }){
             <NavLinks />
         </MiddleSection>
         <RightSection>
-             <Accessibility onLogout={onLogout} />
+            <Link to = "/profile">
+            <Img src ={localStorage.getItem("profileImage") || profile_icon} alt=""/>
+            </Link>
         </RightSection>
     </NavBarContainer>
 }

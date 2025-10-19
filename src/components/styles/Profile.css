@@ -38,10 +38,30 @@ body{
 }
 
 .inputs{
-    margin-top: 55px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap:25px;
+}
+
+.ProfileIMG {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  cursor:pointer;
+}
+
+.ProfileIMG img {
+  cursor: pointer;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: 0.2s ease-in-out;
+}
+
+.ProfileIMG img:hover {
+    transform:scale(1.2);
 }
 
 .input{
@@ -82,15 +102,7 @@ body{
     cursor: pointer;
 }
 
-/* Ensure the submit container centers its content */
-.submit-container {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin: 30px auto 10px;
-}
-
-.submit{
+.ProfileButton{
     display:flex;
     justify-content: center;
     align-items: center;
@@ -109,24 +121,25 @@ body{
      &:hover{
         background-color: #00c9ff;
     }
+}
 
-    
+.logout{
+    background-color: #f76190;
+    background-image: linear-gradient(to right, transparent 0%, #ff1255 100%);
+
+    &:hover{
+        background-color: #ff1255;
+    }
+}
+
+.ProfileButtons {
+  display: flex;             /* use flexbox */
+  justify-content: center;   /* center the buttons horizontally */
+  gap: 20px;                 /* space between buttons */
+  margin-top: 30px;          /* optional: space above buttons */
 }
 
 .gray {
     background: #EAEAEA;
     color: #676767;
-}
-
-.switch-form{
-    margin-top: 30px;
-    margin-left:70px;
-    color: white;
-}
-
-.switch-form a{
-    &:hover{
-        transition: 0.2s ease-in-out;
-        color:#2ecc71
-    }
 }
