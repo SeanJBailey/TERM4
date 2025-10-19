@@ -10,34 +10,36 @@ import Signup from "./components/pages/Signup"; // Import Signup component
 import Home from "./components/pages/Home";
 import "./index.css";
 import Vehicles from "./components/pages/Vehicles";
-import Tickets from "./components/pages/Tickets";
-<<<<<<< HEAD
+
 import ParkingLotForm from "./components/pages/ParkingLotForm";
-=======
+import Tickets from "./components/pages/Tickets";
 import Profile from "./components/pages/Profile";
->>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
+
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => {
     try {
-      const raw = localStorage.getItem('currentUser');
+      const raw = localStorage.getItem("currentUser");
       return raw ? JSON.parse(raw) : null;
-    } catch (e) { return null; }
+    } catch (e) {
+      return null;
+    }
   });
   const [refreshFlag, setRefreshFlag] = useState(0);
 
-<<<<<<< HEAD
+
   // Handle login. `user` may be provided by Login component or omitted (older flow)
   const handleLogin = (user) => {
     if (user) {
       setCurrentUser(user);
-      try { localStorage.setItem('currentUser', JSON.stringify(user)); } catch (e) { /* ignore */ }
+      try {
+        localStorage.setItem("currentUser", JSON.stringify(user));
+      } catch (e) {
+        /* ignore */
+      }
     }
-=======
-
-  const handleLogin = () => {
->>>>>>> 096e576b0da8d7e4479f85ff12ce6f31ef885fcb
+    
     setIsLoggedIn(true);
   };
 
@@ -45,108 +47,122 @@ export default function App() {
     localStorage.clear(); // clears local storage for logout
     setIsLoggedIn(false);
     setCurrentUser(null);
-    try { localStorage.removeItem('currentUser'); } catch (e) { /* ignore */ }
+    try {
+      localStorage.removeItem("currentUser");
+    } catch (e) {
+      /* ignore */
+    }
   };
 
-  const handleNewReservation = () => setRefreshFlag(f => f + 1);
+  const handleNewReservation = () => setRefreshFlag((f) => f + 1);
 
   return (
     <BrowserRouter>
       {isLoggedIn && <NavBar onLogout={handleLogout} />}
       <Routes>
-        <Route 
-          path="/" 
+        <Route
+          path="/"
           element={
-            isLoggedIn ? 
-            <Navigate to="/home" replace /> : 
-            <Login onLogin={handleLogin} />
-          } 
-        />
-        <Route 
-          path="/login" 
-          element={
-            isLoggedIn ? 
-            <Navigate to="/home" replace /> : 
-            <Login onLogin={handleLogin} />
-          } 
-        />
-        <Route 
-          path="/signup" 
-          element={
-            isLoggedIn ? 
-            <Navigate to="/Login" replace /> : 
-            <Signup onLogin={handleLogin} />
-          } 
-        />
-        <Route 
-          path="/home" 
-          element={
-            isLoggedIn ? 
-            <Home currentUser={currentUser} /> : 
-            <Navigate to="/login" replace />
-          } 
-        />
-        <Route 
-          path="/reservations" 
-          element={
-            isLoggedIn ? 
-            <div className="min-h-screen bg-gray-100 p-6">
-            
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ReservationForm onSuccess={handleNewReservation} />
-                <div className="bg-white p-4 rounded shadow">
-                  <ReservationList refreshFlag={refreshFlag} />
-                </div>
-              </div>
-            </div> : 
-            <Navigate to="/login" replace />
-          } 
-        />
-        <Route 
-          path="/reservation/:id" 
-          element={
-            isLoggedIn ? 
-            <ReservationDetail /> : 
-            <Navigate to="/login" replace />
-          } 
-        />
-        <Route 
-          path="/vehicles" 
-          element={
-            isLoggedIn ? 
-             <Vehicles />: 
-            <Navigate to="/login" replace />
-          } 
-        />
-        <Route 
-          path="/parking-lots"
-          element={
-            isLoggedIn ?
-            <div className="min-h-screen bg-gray-100 p-6">
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
-                <ParkingLotForm currentUser={currentUser} onSuccess={() => {}} />
-              </div>
-            </div> :
-            <Navigate to="/login" replace />
+            isLoggedIn ? (
+              <Navigate to="/home" replace />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
           }
         />
-        <Route 
-          path="/tickets" 
+        <Route
+          path="/login"
           element={
-            isLoggedIn ? 
-            <Tickets />: 
-            <Navigate to="/login" replace />
-          } 
+            isLoggedIn ? (
+              <Navigate to="/home" replace />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
+          }
         />
-
-        <Route 
-            path="/profile" 
-            element={
-              isLoggedIn ? 
-                <Profile onLogout = {handleLogout}/>: 
-                <Navigate to="/login" replace />
-            }
-          />
+        <Route
+          path="/signup"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/login" replace />
+            ) : (
+              <Signup onLogin={handleLogin} />
+            )
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            isLoggedIn ? (
+              <Home currentUser={currentUser} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/reservations"
+          element={
+            isLoggedIn ? (
+              <div className="min-h-screen bg-gray-100 p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <ReservationForm onSuccess={handleNewReservation} />
+                  <div className="bg-white p-4 rounded shadow">
+                    <ReservationList refreshFlag={refreshFlag} />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/reservation/:id"
+          element={
+            isLoggedIn ? (
+              <ReservationDetail />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/vehicles"
+          element={
+            isLoggedIn ? <Vehicles /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/parking-lots"
+          element={
+            isLoggedIn ? (
+              <div className="min-h-screen bg-gray-100 p-6">
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+                  <ParkingLotForm currentUser={currentUser} onSuccess={() => {}} />
+                </div>
+              </div>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/tickets"
+          element={
+            isLoggedIn ? <Tickets /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            isLoggedIn ? (
+              <Profile onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
