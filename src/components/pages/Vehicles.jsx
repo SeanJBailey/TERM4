@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Vehicles.css";
+import { authFetch } from "../../API/authFetch";
 
 export default function Vehicles() {
   const [formData, setFormData] = useState({
@@ -18,15 +19,11 @@ export default function Vehicles() {
   // Fetch all vehicles
   const fetchVehicles = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/vehicle/all");
-      if (response.ok) {
-        const data = await response.json();
-        setVehicles(data);
-      } else {
-        console.error("Failed to fetch vehicles");
-      }
-    } catch (error) {
-      console.error("Error fetching vehicles:", error);
+      const data = await authFetch("http://localhost:8080/api/vehicle/all");
+      setVehicles(data);
+    } catch (err) {
+      console.error("Failed to fetch vehicles:", err.message);
+      alert(err.message);
     }
   };
 
@@ -57,7 +54,6 @@ export default function Vehicles() {
 
     try {
       const data = new FormData();
-
       if (editingId) data.append("vehicleId", editingId);
 
       data.append("licensePlate", formData.licensePlate);
@@ -66,9 +62,7 @@ export default function Vehicles() {
       data.append("vehicleColour", formData.vehicleColour);
       data.append("vehicleVIN", formData.vehicleVIN);
 
-      if (formData.vehicleImage) {
-        data.append("vehicleImage", formData.vehicleImage);
-      }
+      if (formData.vehicleImage) data.append("vehicleImage", formData.vehicleImage);
 
       const url = editingId
         ? "http://localhost:8080/api/vehicle/update"
@@ -76,27 +70,23 @@ export default function Vehicles() {
 
       const method = editingId ? "PUT" : "POST";
 
-      const response = await fetch(url, { method, body: data });
+      await authFetch(url, { method, body: data });
 
-      if (response.ok) {
-        alert(editingId ? "Vehicle updated successfully!" : "Vehicle added successfully!");
-        setFormData({
-          licensePlate: "",
-          vehicleMake: "",
-          vehicleModel: "",
-          vehicleColour: "",
-          vehicleVIN: "",
-          vehicleImage: null,
-          imagePreview: null,
-        });
-        setEditingId(null);
-        fetchVehicles();
-      } else {
-        alert("Failed to save vehicle. Check backend logs.");
-      }
-    } catch (error) {
-      console.error("Error saving vehicle:", error);
-      alert("Error connecting to server. Is it running?");
+      alert(editingId ? "Vehicle updated successfully!" : "Vehicle added successfully!");
+      setFormData({
+        licensePlate: "",
+        vehicleMake: "",
+        vehicleModel: "",
+        vehicleColour: "",
+        vehicleVIN: "",
+        vehicleImage: null,
+        imagePreview: null,
+      });
+      setEditingId(null);
+      fetchVehicles();
+    } catch (err) {
+      console.error("Error saving vehicle:", err.message);
+      alert(err.message);
     }
   };
 
@@ -105,26 +95,18 @@ export default function Vehicles() {
     if (!window.confirm("Are you sure you want to delete this vehicle?")) return;
 
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/vehicle/delete/${vehicleId}`,
-        { method: "DELETE" }
-      );
-
-      if (response.ok) {
-        alert("Vehicle deleted!");
-        fetchVehicles();
-      } else {
-        alert("Failed to delete vehicle.");
-      }
-    } catch (error) {
-      console.error("Error deleting vehicle:", error);
+      await authFetch(`http://localhost:8080/api/vehicle/delete/${vehicleId}`, { method: "DELETE" });
+      alert("Vehicle deleted!");
+      fetchVehicles();
+    } catch (err) {
+      console.error("Failed to delete vehicle:", err.message);
+      alert(err.message);
     }
   };
 
   // Edit existing vehicle
   const handleEdit = (vehicle) => {
     setEditingId(vehicle.vehicleId);
-
     setFormData({
       licensePlate: vehicle.licensePlate,
       vehicleMake: vehicle.vehicleMake,
@@ -136,7 +118,6 @@ export default function Vehicles() {
         ? `http://localhost:8080${vehicle.vehicleImage}`
         : null,
     });
-
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -213,11 +194,7 @@ export default function Vehicles() {
 
           {formData.imagePreview && (
             <div className="vehicle-preview">
-              <img
-                src={formData.imagePreview}
-                alt="Preview"
-                style={{ width: "200px", marginTop: "10px" }}
-              />
+              <img src={formData.imagePreview} alt="Preview" style={{ width: "200px", marginTop: "10px" }} />
             </div>
           )}
 
@@ -248,14 +225,8 @@ export default function Vehicles() {
                 <tr key={v.vehicleId}>
                   <td>
                     {v.vehicleImage ? (
-                      <img
-                        src={`http://localhost:8080${v.vehicleImage}`}
-                        alt="Vehicle"
-                        style={{ width: "80px" }}
-                      />
-                    ) : (
-                      "N/A"
-                    )}
+                      <img src={`http://localhost:8080${v.vehicleImage}`} alt="Vehicle" style={{ width: "80px" }} />
+                    ) : "N/A"}
                   </td>
                   <td>{v.licensePlate}</td>
                   <td>{v.vehicleMake}</td>
@@ -263,23 +234,14 @@ export default function Vehicles() {
                   <td>{v.vehicleColour}</td>
                   <td>{v.vehicleVIN}</td>
                   <td>
-                    <button className="edit-btn" onClick={() => handleEdit(v)}>
-                      Edit
-                    </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(v.vehicleId)}
-                    >
-                      Delete
-                    </button>
+                    <button className="edit-btn" onClick={() => handleEdit(v)}>Edit</button>
+                    <button className="delete-btn" onClick={() => handleDelete(v.vehicleId)}>Delete</button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" style={{ textAlign: "center" }}>
-                  No vehicles found.
-                </td>
+                <td colSpan="7" style={{ textAlign: "center" }}>No vehicles found.</td>
               </tr>
             )}
           </tbody>
