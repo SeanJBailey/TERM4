@@ -1,22 +1,23 @@
-﻿﻿import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import NavBar from "./components/navbar";
 import ReservationForm from "./components/pages/ReservationForm";
 import ReservationList from "./components/pages/ReservationList";
 import ReservationDetail from "./components/pages/ReservationDetail";
-import Login from "./components/pages/Login";
-import Signup from "./components/pages/Signup"; // Import Signup component
+import Login from "./components/pages/user/Login";
+import Signup from "./components/pages/user/Signup"; // Import Signup component
 import Home from "./components/pages/Home";
 import "./index.css";
 import Vehicles from "./components/pages/Vehicles";
 
 import ParkingLotForm from "./components/pages/ParkingLotForm";
 import Tickets from "./components/pages/Tickets";
-import Profile from "./components/pages/Profile";
-
+import Profile from "./components/pages/user/Profile";
+import ParkingSpots from "./components/pages/ParkingSpots";
 
 export default function App() {
+  // change back to false after testing parking spot
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => {
     try {
@@ -27,19 +28,9 @@ export default function App() {
     }
   });
   const [refreshFlag, setRefreshFlag] = useState(0);
+  const [profileImage, setProfileImage] = useState(null);
 
-
-  // Handle login. `user` may be provided by Login component or omitted (older flow)
-  const handleLogin = (user) => {
-    if (user) {
-      setCurrentUser(user);
-      try {
-        localStorage.setItem("currentUser", JSON.stringify(user));
-      } catch (e) {
-        /* ignore */
-      }
-    }
-    
+  const handleLogin = () => {
     setIsLoggedIn(true);
   };
 
@@ -58,7 +49,14 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      {isLoggedIn && <NavBar onLogout={handleLogout} />}
+
+      {isLoggedIn && 
+      <NavBar 
+      onLogout={handleLogout} 
+      profileImage={profileImage}
+      />
+      }
+
       <Routes>
         <Route
           path="/"
@@ -153,16 +151,26 @@ export default function App() {
             isLoggedIn ? <Tickets /> : <Navigate to="/login" replace />
           }
         />
-        <Route
-          path="/profile"
+
+        <Route 
+          path="/parkingspots" 
           element={
-            isLoggedIn ? (
-              <Profile onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
+            isLoggedIn ? 
+            <ParkingSpots />: 
+            <Navigate to="/login" replace />
+          } 
         />
+
+        <Route 
+            path="/profile" 
+            element={
+              isLoggedIn ? 
+                <Profile onLogout = {handleLogout}
+                onProfileUpdate={setProfileImage}
+                />: 
+                <Navigate to="/login" replace />
+            }
+          />
       </Routes>
     </BrowserRouter>
   );

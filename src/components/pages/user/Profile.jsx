@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Profile.css";
-import user_icon from "../assets/person.png";
-import email_icon from "../assets/email.png";
-import password_icon from "../assets/password.png";
-import calender_icon from "../assets/calendar.png";
-import phone_icon from "../assets/phone.png";
-import person from "../assets/person.png";
-import profile_icon from "../assets/profileIMG.png";
-import gender_icon from "../assets/gender.png";
-import { Link } from "react-router-dom";
-import {getUser, update} from '../../API/userApi';
+import "../../styles/Profile.css";
+import user_icon from "../../assets/person.png";
+import email_icon from "../../assets/email.png";
+import password_icon from "../../assets/password.png";
+import calender_icon from "../../assets/calendar.png";
+import phone_icon from "../../assets/phone.png";
+import person from "../../assets/person.png";
+import profile_icon from "../../assets/profileIMG.png";
+import gender_icon from "../../assets/gender.png";
+import {getUser, update} from '../../../API/userApi';
 
-const Profile = ({onLogout}) => {
+const Profile = ({onLogout, onProfileUpdate}) => {
   const [formData, setFormData] = useState({
     name: "",
     contactNumber: "",
@@ -20,7 +19,7 @@ const Profile = ({onLogout}) => {
     userName: "",
     email: "",
     password: "",
-    profileImage: null,       // backend/base64
+    profileImage: null,       // backend base64
     profilePreview: null,     // local uploaded preview
     profileImageFile: null,   // uploaded file
   });
@@ -41,12 +40,11 @@ const Profile = ({onLogout}) => {
         userName: data.userName || "",
         email: data.email || "",
         password: data.password || "",
-        profileImage: data.profileImage || profile_icon,
-        profilePreview: null,
-        profileImageFile: null,
+        profileImage: data.profileImage || profile_icon, // base64 from backend
+        profilePreview: null, // local preview
+        profileImageFile: null, // user uploaded image file
       });
 
-      localStorage.setItem("profileImage", data.profileImage || "");
     } catch (err) {
       console.error("Error fetching user data:", err);
     }
@@ -59,11 +57,11 @@ const Profile = ({onLogout}) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setFormData((prev) => ({
-      ...prev,
-      profileImageFile: file,
+    setFormData((prev) => ({ 
+      ...prev, 
+      profileImageFile: file, 
       profilePreview: URL.createObjectURL(file),
-    }));
+     }));
   };
 
   const handleSubmit = async (e) => {
@@ -81,15 +79,25 @@ const Profile = ({onLogout}) => {
     data.append("userName", formData.userName);
     data.append("email", formData.email);
     data.append("password", formData.password);
-    if (formData.profileImageFile) {
-      data.append("profileImage", formData.profileImageFile);
-    }
-
+    if (formData.profileImageFile) 
+      data.append("profileImage", formData.profileImageFile);    
+  
     try {
       const response = await update(data);
       console.log("Update response:", response);
 
-      if (response.ok) alert("Profile updated successfully!");
+      const updatedImage = formData.profilePreview || formData.profileImage || response?.profileImage;
+
+      if (onProfileUpdate) onProfileUpdate(updatedImage);
+
+      setFormData((prev) => ({
+        ...prev,
+        profileImage: updatedImage,
+        profilePreview: null,
+        profileImageFile: null,
+      }));
+
+      alert("Profile updated successfully!");
     } catch (error) {
       console.error("Update failed:", error);
       alert("Update failed. Please try again.");

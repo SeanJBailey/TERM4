@@ -1,0 +1,50 @@
+.card{
+    color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 50px;  /* space between elememts and border */
+    text-align: center;
+    width: 100px;
+    cursor: pointer;;
+    margin-top: 80px;
+    margin-left: 45px;
+}
+
+.Title{
+    color:white;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 30px;
+}
+
+.parking-container{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+}
+
+.parent-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.confirm{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background-color: #2ecc71;
+    background-image: linear-gradient(to right, transparent 0%, #0dff00 100%);
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+     &:hover{
+        background-color: #22ff00;
+    }
+
+}

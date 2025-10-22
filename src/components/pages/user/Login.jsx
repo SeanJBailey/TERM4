@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import '../styles/LoginSignup.css';
-import profile_icon from '../assets/profile.png';
-import password_icon from '../assets/password.png';
+import '../../styles/LoginSignup.css';
+import profile_icon from '../../assets/profile.png';
+import password_icon from '../../assets/password.png';
 import { Link } from 'react-router-dom';
-import {login} from '../../API/userApi';
+import {login} from '../../../API/userApi';
 
-const Login = ({ onLogin }) => { 
+const Login = ({onLogin}) => { 
 
   const [formData, setFormData] = useState({ //represents all input fields in login form, initlazises state of formdata
     userName: '',
