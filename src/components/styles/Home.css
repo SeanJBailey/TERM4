@@ -1,5 +1,5 @@
 /* ======= Brand palette (matches your current app) ======= */
-:root{
+:root {
   --bg: #10372d;           /* dark green */
   --panel: #0f2f26;        /* card/overlay */
   --text: #e8f6ef;         /* near-white text */
@@ -16,53 +16,49 @@
 }
 
 /* ======= Page wrapper ======= */
-.home-page{
-  /* keeps clear of your top navbar */
+.home-page {
   padding: 88px 20px 40px;
 }
 
 /* ======= HERO ======= */
-.home-hero{
+.home-hero {
   position: relative;
   max-width: 1200px;
   margin: 0 auto 24px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-
-  /* Subtle image background that suits parking theme */
   background: #0b221c url("https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?q=80&w=1920")
               center/cover no-repeat;
 }
-.home-hero::after{
-  /* darken for contrast */
-  content:"";
-  position:absolute; inset:0;
+.home-hero::after {
+  content: "";
+  position: absolute; inset: 0;
   background: linear-gradient(0deg, rgba(16,55,45,.85), rgba(16,55,45,.55));
 }
-.home-hero__content{
+.home-hero__content {
   position: relative; z-index: 1;
   padding: 34px 26px;
   text-align: center;
   color: var(--text);
 }
-.home-hero h1{
+.home-hero h1 {
   margin: 0 0 6px;
   font-size: clamp(28px, 4vw, 40px);
   letter-spacing: .3px;
 }
-.home-hero p{
+.home-hero p {
   margin: 0 0 18px;
   color: var(--muted);
 }
 
-/* Search */
-.home-search{
+/* ======= Search ======= */
+.home-search {
   display: flex; gap: 10px;
   justify-content: center; align-items: center;
   max-width: 640px; margin: 0 auto;
 }
-.home-search input{
+.home-search input {
   flex: 1; min-width: 0;
   padding: 12px 16px;
   border-radius: 999px;
@@ -71,40 +67,42 @@
   color: var(--text);
   outline: none;
 }
-.home-search input::placeholder{ color: var(--muted); }
+.home-search input::placeholder { color: var(--muted); }
 
 /* ======= GRID (3 per row) ======= */
-.home-grid{
+.home-grid {
   max-width: 1200px;
   margin: 20px auto 16px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 22px;
 }
-@media (max-width: 980px){
-  .home-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+@media (max-width: 980px) {
+  .home-grid { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 620px){
-  .home-grid{ grid-template-columns: 1fr; }
+@media (max-width: 620px) {
+  .home-grid { grid-template-columns: 1fr; }
 }
 
-.lot-card{
+/* ======= LOT CARD ======= */
+.lot-card {
   background: var(--panel);
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-md);
+  transition: transform .3s ease;
 }
-.lot-card img{
+.lot-card:hover {
+  transform: scale(1.03);
+}
+.lot-card img {
   width: 100%;
   height: 220px;
   object-fit: cover;
   display: block;
-  transition: transform .5s ease;
   filter: saturate(1.05) contrast(1.02);
 }
-.lot-card:hover img{ transform: scale(1.04); }
-
-.lot-card__footer{
+.lot-card__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -112,14 +110,14 @@
   padding: 14px 16px 16px;
   color: var(--text);
 }
-.lot-card__footer h3{
+.lot-card__footer h3 {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
 }
 
 /* ======= ACTION BAR ======= */
-.home-actions{
+.home-actions {
   max-width: 1200px;
   margin: 8px auto 0;
   padding: 16px;
@@ -132,8 +130,8 @@
   flex-wrap: wrap;
 }
 
-/* ======= Buttons (scoped, compact, formal) ======= */
-.btn{
+/* ======= Buttons ======= */
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -145,62 +143,65 @@
   border-radius: 999px;
   cursor: pointer;
   transition: transform .05s ease, filter .2s ease;
-  /* Neutralize any global .submit width rules */
   width: auto !important;
 }
-.btn-sm{ padding: 8px 14px; font-size: .9rem; }
+.btn-sm { padding: 8px 14px; font-size: .9rem; }
 
-.btn-grad{
+.btn-grad {
   background: linear-gradient(90deg, var(--grad-start), var(--grad-end));
 }
-.btn:hover{ filter: brightness(1.06); }
-.btn:active{ transform: translateY(1px); }
+.btn:hover { filter: brightness(1.06); }
+.btn:active { transform: translateY(1px); }
 
+/* ======= Parking List Grid (3 horizontal per row) ======= */
 .parking-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-  padding: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+@media (max-width: 980px) {
+  .parking-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .parking-list { grid-template-columns: 1fr; }
 }
 
+/* ======= Parking Card ======= */
 .parking-card {
-  background: var(--card-bg, #fff);
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background: var(--panel);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
+  box-shadow: var(--shadow-md);
+  transition: transform .3s ease;
+  color: var(--text);
 }
-
+.parking-card:hover {
+  transform: scale(1.03);
+}
 .parking-card img {
   width: 100%;
-  height: 150px;
+  height: 180px;
   object-fit: cover;
 }
-
 .parking-card h3 {
-  margin: 12px 12px 4px;
+  margin: 12px 16px 4px;
   font-size: 1.1rem;
   font-weight: bold;
 }
-
 .parking-card p {
-  margin: 0 12px 6px;
-  color: #555;
+  margin: 0 16px 12px;
+  color: var(--muted);
   font-size: 0.95rem;
 }
-
 .parking-card .actions {
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
   gap: 8px;
-  margin: 12px;
+  margin: 12px 16px;
 }
-
 .book-btn {
-  margin-left: auto;
   background: #4CAF50;
   color: white;
   border: none;
@@ -209,8 +210,6 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
-
 .book-btn:hover {
   background: #45a049;
 }
-
