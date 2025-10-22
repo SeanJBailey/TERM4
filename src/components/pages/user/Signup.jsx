@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import '../styles/LoginSignup.css';
-import user_icon from '../assets/person.png';
-import email_icon from '../assets/email.png';
-import password_icon from '../assets/password.png';
-import calender_icon from '../assets/calendar.png';
-import phone_icon from '../assets/phone.png';
-import profile_icon from '../assets/profile.png';
-import gender_icon from '../assets/gender.png';
-import { Link } from 'react-router-dom';
-import {SignUp} from '../../API/userApi';
+import '../../styles/LoginSignup.css';
+import user_icon from '../../assets/person.png';
+import email_icon from '../../assets/email.png';
+import password_icon from '../../assets/password.png';
+import calender_icon from '../../assets/calendar.png';
+import phone_icon from '../../assets/phone.png';
+import profile_icon from '../../assets/profile.png';
+import gender_icon from '../../assets/gender.png';
+import { Link, replace } from 'react-router-dom';
+import {SignUp} from '../../../API/userApi';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = ({ onLogin }) => { 
+  const navigate = useNavigate();
+
   // Defines a Signup component with state for all the form fields. As the user types,
   // formData will hold the latest values, and setFormData will update them.
   const [formData, setFormData] = useState({ //represents all input fields in signup form, initlazises state of formdata
@@ -36,7 +39,8 @@ const Signup = ({ onLogin }) => {
 
     try {
       await SignUp(formData);
-      onLogin();
+      alert('Signup successful! You can now log in.');
+      navigate('/login', {replace: true}); // replace true so user cant go back to signup page
     } catch (error) {
       console.error(error);
       alert('Signup error: ' + error.message);

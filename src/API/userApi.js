@@ -1,5 +1,9 @@
+import userEvent from "@testing-library/user-event";
+import { Form } from "react-router-dom";
+import index from "../components/navbar";  
 // src/api/user.api.js
 
+// to login user and store userID in localStorage
 // Handles login
 export const login = async (credentials) => {
   const response = await fetch('http://localhost:8080/user/login', {
@@ -45,6 +49,33 @@ export const SignUp = async (credentials) => {
     localStorage.setItem('token', data.token);
   }
   localStorage.setItem('userID', data.userID);
+  getUser();
+};
+
+// to signup user and store userID in localStorage
+export const SignUp =  async (credentials)=>{
+
+   const response = await fetch ('http://localhost:8080/user/signup',{
+     method: "POST",
+     headers: {'Content-Type' : 'application/json'},
+     body: JSON.stringify(credentials)
+   });
+
+    if(!response.ok){
+      throw new Error('Signup failed');
+    }
+
+    const data = await response.json();
+
+    localStorage.setItem('userID', data.userID);
+    getUser();
+}
+
+// to retrive user details
+export const getUser = async () =>{
+
+  const userID = localStorage.getItem('userID');
+  if(!userID) return; 
 
     await getUser(data.userID, data.token);
 };
@@ -67,6 +98,8 @@ export const getUser = async (userID, token) => {
   }
 
   const data = await response.json();
+  //converts image from bytes to base64
+  data.profileImage = convertImageToBase64(data.profileImage);
 
   // Convert profile image bytes to Base64
   if (data.profileImage) {
@@ -86,6 +119,14 @@ export const getUser = async (userID, token) => {
 
   localStorage.setItem('profileImage', data.profileImage || '');
   return data;
+}
+
+// to update user details
+export const update = async (Data) =>{
+
+  const response = await fetch ('http://localhost:8080/user/update',{
+    method: 'PUT',
+    body: Data
 };
 
 // Update user profile
@@ -108,8 +149,27 @@ export const update = async (formData) => {
     throw new Error('Update failed');
   }
 
+  
   const data = await response.json();
   
   return data;
+}
+
+export const convertImageToBase64 = (image) => {
+  if (!image) return null;
+
+  if (image.data) { 
+    const bytes = image.data;
+    const base64String = btoa(
+      new Uint8Array(bytes).reduce((acc, byte) => acc + String.fromCharCode(byte), "")
+    );
+    return `data:image/jpeg;base64,${base64String}`;
+  } else if (typeof image === "string") {
+    return `data:image/jpeg;base64,${image}`;
+  }
+
+  return null;
+};
+
 };
 
