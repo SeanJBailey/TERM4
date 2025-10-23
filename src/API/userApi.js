@@ -49,35 +49,7 @@ export const SignUp = async (credentials) => {
     localStorage.setItem('token', data.token);
   }
   localStorage.setItem('userID', data.userID);
-  getUser();
-};
-
-// to signup user and store userID in localStorage
-export const SignUp =  async (credentials)=>{
-
-   const response = await fetch ('http://localhost:8080/user/signup',{
-     method: "POST",
-     headers: {'Content-Type' : 'application/json'},
-     body: JSON.stringify(credentials)
-   });
-
-    if(!response.ok){
-      throw new Error('Signup failed');
-    }
-
-    const data = await response.json();
-
-    localStorage.setItem('userID', data.userID);
-    getUser();
-}
-
-// to retrive user details
-export const getUser = async () =>{
-
-  const userID = localStorage.getItem('userID');
-  if(!userID) return; 
-
-    await getUser(data.userID, data.token);
+  
 };
 
 // Retrieves logged-in user info
@@ -101,33 +73,9 @@ export const getUser = async (userID, token) => {
   //converts image from bytes to base64
   data.profileImage = convertImageToBase64(data.profileImage);
 
-  // Convert profile image bytes to Base64
-  if (data.profileImage) {
-    if (data.profileImage.data) {
-      const bytes = data.profileImage.data;
-      const base64String = btoa(
-        new Uint8Array(bytes).reduce(
-          (acc, byte) => acc + String.fromCharCode(byte),
-          ''
-        )
-      );
-      data.profileImage = `data:image/jpeg;base64,${base64String}`;
-    } else if (typeof data.profileImage === 'string') {
-      data.profileImage = `data:image/jpeg;base64,${data.profileImage}`;
-    }
-  }
-
   localStorage.setItem('profileImage', data.profileImage || '');
   return data;
 }
-
-// to update user details
-export const update = async (Data) =>{
-
-  const response = await fetch ('http://localhost:8080/user/update',{
-    method: 'PUT',
-    body: Data
-};
 
 // Update user profile
 export const update = async (formData) => {
@@ -169,7 +117,5 @@ export const convertImageToBase64 = (image) => {
   }
 
   return null;
-};
-
-};
+}
 

@@ -27,10 +27,12 @@ const Profile = ({onLogout, onProfileUpdate}) => {
   useEffect(() => {
   const fetchUserData = async () => {
     const userID = localStorage.getItem("userID");
+    const token = localStorage.getItem("token");
+
     if (!userID) return;
 
     try {
-      const data = await getUser();
+      const data = await getUser(userID, token);
       
       setFormData({
         name: data.name || "",
