@@ -1,5 +1,16 @@
 /* ParkingLot.css - adapted to app theme variables */
 
+/* Center the parking form vertically & horizontally */
+.parking-form-wrapper {
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+  min-height: 90vh;        /* take almost full viewport height */
+  padding: 20px;
+  /* do not change background */
+}
+
+
 /* Form container (uses panel background like other cards) */
 .parking-form-container {
   background: var(--panel);
@@ -10,6 +21,7 @@
   max-width: 640px;
   color: var(--text);
 }
+
 
 /* Form inputs inherit app style */
 .parking-form input,

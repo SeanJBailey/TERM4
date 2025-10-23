@@ -38,9 +38,8 @@ export const createParkingLot = async (formData) => {
 
 // -------------------- UPDATE --------------------
 export const updateParkingLot = async (lotId, formData) => {
-    const token = localStorage.getItem('token');
-  // Spring Boot handles multipart POST with _method=PUT if needed
-  const response = await fetch(`http://localhost:8000/api/parkingLots/update/${lotId}`, {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`http://localhost:8080/api/parkingLots/update/${lotId}`, { // <-- changed
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}` 
@@ -61,10 +60,8 @@ export const updateParkingLot = async (lotId, formData) => {
 // -------------------- GET SINGLE --------------------
 export const getParkingLot = async (lotId) => {
   const token = localStorage.getItem('token');
-  const response = await fetch(`http://localhost:8000/api/parkingLots/read/${lotId}`,{
-    headers: {
-      Authorization: `Bearer ${token}` 
-    },
+  const response = await fetch(`http://localhost:8080/api/parkingLots/read/${lotId}`, { // <-- changed
+    headers: { Authorization: `Bearer ${token}` },
   });
   if (!response.ok) throw new Error("Failed to fetch parking lot");
 
@@ -75,11 +72,9 @@ export const getParkingLot = async (lotId) => {
 
 // -------------------- GET ALL --------------------
 export const getAllParkingLots = async () => {
-    const token = localStorage.getItem('token');
-  const response = await fetch("http://localhost:8000/api/parkingLots/all", {
-    headers: {
-      Authorization: `Bearer ${token}` 
-    },
+  const token = localStorage.getItem('token');
+  const response = await fetch("http://localhost:8080/api/parkingLots/all", { // <-- changed
+    headers: { Authorization: `Bearer ${token}` },
   });
   if (!response.ok) throw new Error("Failed to fetch parking lots");
 
@@ -92,18 +87,11 @@ export const getAllParkingLots = async () => {
 
 // -------------------- DELETE --------------------
 export const deleteParkingLot = async (lotId) => {
-    const token = localStorage.getItem('token');
-  const response = await fetch(`http://localhost:8000/api/parkingLots/delete/${lotId}`, {
-    headers: {
-      Authorization: `Bearer ${token}` 
-    },
+  const token = localStorage.getItem('token');
+  const response = await fetch(`http://localhost:8080/api/parkingLots/delete/${lotId}`, { // <-- changed
+    headers: { Authorization: `Bearer ${token}` },
     method: "DELETE"
   });
   if (!response.ok) throw new Error("Failed to delete parking lot");
   return true;
 };
-
-// -------------------- ALIASES --------------------
-export const fetchParkingLots = getAllParkingLots;
-export const fetchParkingLot = getParkingLot;
-export const fetchParkingLotById = getParkingLot;
