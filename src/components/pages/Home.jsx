@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Home.css"; 
 import { fetchParkingLots, deleteParkingLot } from "../../API/parkingApi";
 import ParkingLotForm from "./ParkingLotForm";
-import ParkingLotList from "../ParkingLotList";
+import ParkingLotList from "../javascript/ParkingLotList";
 
 export default function Home({ currentUser }) {
   const navigate = useNavigate();
