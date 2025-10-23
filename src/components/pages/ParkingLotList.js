@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { fetchParkingLots, deleteParkingLot } from "../API/parkingApi";
-import "./styles/ParkingLotList.css";
+import { fetchParkingLots, deleteParkingLot } from "../../API/parkingApi";
+
 
 export default function ParkingLotList({ currentUser, onEdit }) {
   const [lots, setLots] = useState([]);
