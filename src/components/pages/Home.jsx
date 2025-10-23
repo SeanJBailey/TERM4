@@ -83,6 +83,8 @@ export default function Home({ currentUser }) {
         <Link to="/reservations" className="btn btn-grad">Make a Reservation</Link>
         <Link to="/vehicles" className="btn btn-grad">Manage Vehicles</Link>
         <Link to="/tickets" className="btn btn-grad">View Tickets</Link>
+        <Link to="/parkingspots" className="btn btn-grad">Parking Spots</Link>
+
       </section>
     </main>
   );
